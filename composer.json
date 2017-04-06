@@ -6,6 +6,6 @@
 		"afterlogic/aurora-framework": "~0.3"
 	},
 	"extra": {
-		"installer-name": "MailSaveMessageAsPdfWebclientPlugin"
+		"installer-name": "MailSaveMessageAsPdfPlugin"
 	}
 }
