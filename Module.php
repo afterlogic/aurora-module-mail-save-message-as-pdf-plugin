@@ -26,7 +26,6 @@ class Module extends \Aurora\System\Module\AbstractModule
 		\Aurora\System\Api::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
 		
 		$sFileName = $FileName . '.pdf';
-		$sMimeType = 'application/pdf';
 
 		$sUUID = \Aurora\System\Api::getUserUUIDById($UserId);
 		$sTempName = md5($sUUID.$sFileName.microtime(true));
@@ -55,26 +54,8 @@ class Module extends \Aurora\System\Module\AbstractModule
 			
 			$oSnappy->generateFromHtml($oCssToInlineStyles->convert(),
 				$oApiFileCache->generateFullFilePath($sUUID, $sTempName), array(), true);
-
-			$sHash = \Aurora\System\Api::EncodeKeyValues(array(
-				'TempFile' => true,
-				'UserId' => $UserId,
-				'Name' => $sFileName,
-				'TempName' => $sTempName
-			));
-			$aActions = array(
-					'download' => array(
-					'url' => '?file-cache/' . $sHash
-				)
-			);
-			return array(
-				'TempName' => $sTempName,
-				'Name' => $sFileName,
-				'Size' => $oApiFileCache->fileSize($sUUID, $sTempName),
-				'MimeType' => $sMimeType,
-				'Hash' => $sHash,
-				'Actions' => $aActions
-			);
+			
+			return \Aurora\System\Utils::GetClientFileResponse($UserId, $sFileName, $sTempName, $oApiFileCache->fileSize($sUUID, $sTempName));
 		}
 
 		return false;
