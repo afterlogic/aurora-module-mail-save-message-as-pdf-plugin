@@ -43,7 +43,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 				$sExec = '';
 			}
 		}
-
+		
 		if (0 < \strlen($sExec))
 		{
 			$oSnappy = new \Knp\Snappy\Pdf($sExec);
@@ -56,6 +56,10 @@ class Module extends \Aurora\System\Module\AbstractModule
 				$oApiFileCache->generateFullFilePath($sUUID, $sTempName), array(), true);
 			
 			return \Aurora\System\Utils::GetClientFileResponse($UserId, $sFileName, $sTempName, $oApiFileCache->fileSize($sUUID, $sTempName));
+		}
+		else
+		{
+			throw new \Aurora\System\Exceptions\ApiException(\Aurora\System\Notifications::LibraryNoFound);
 		}
 
 		return false;

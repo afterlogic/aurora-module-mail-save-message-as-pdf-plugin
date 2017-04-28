@@ -57,6 +57,10 @@ module.exports = function (oAppData) {
 									{
 										UrlUtils.downloadByUrl(oResponse.Result.Actions.download.url);
 									}
+									else if (oResponse.ErrorCode === Enums.Errors.LibraryNoFound)
+									{
+										Screens.showError(TextUtils.i18n('%MODULENAME%/ERROR_NO_PDF_GENERATOR_FOUND'));
+									}
 									else
 									{
 										Screens.showError(TextUtils.i18n('%MODULENAME%/ERROR_CREATING_PDF'));
