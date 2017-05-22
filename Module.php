@@ -23,7 +23,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 	 */
 	public function GeneratePdfFile($UserId, $FileName, $Html)
 	{
-		\Aurora\System\Api::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
+		\Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::NormalUser);
 		
 		$sFileName = $FileName . '.pdf';
 
