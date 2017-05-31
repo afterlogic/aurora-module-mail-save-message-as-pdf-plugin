@@ -50,7 +50,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 			$oSnappy->setOption('quiet', true);
 			$oSnappy->setOption('disable-javascript', true);
 
-			$oApiFileCache = \Aurora\System\Api::GetSystemManager('Filecache');
+			$oApiFileCache = new \Aurora\System\Managers\Filecache\Manager();
 			
 			$oSnappy->generateFromHtml($oCssToInlineStyles->convert(),
 				$oApiFileCache->generateFullFilePath($sUUID, $sTempName), array(), true);
