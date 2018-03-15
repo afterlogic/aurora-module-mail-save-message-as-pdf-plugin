@@ -53,9 +53,11 @@ class Module extends \Aurora\System\Module\AbstractModule
 			$oApiFileCache = new \Aurora\System\Managers\Filecache();
 			
 			$oSnappy->generateFromHtml($oCssToInlineStyles->convert(),
-				$oApiFileCache->generateFullFilePath($sUUID, $sTempName), array(), true);
+				$oApiFileCache->generateFullFilePath($sUUID, $sTempName, '', 'Mail'), array(), true);
 			
-			return \Aurora\System\Utils::GetClientFileResponse($UserId, $sFileName, $sTempName, $oApiFileCache->fileSize($sUUID, $sTempName));
+			return \Aurora\System\Utils::GetClientFileResponse(
+				$this->GetName(), $UserId, $sFileName, $sTempName, $oApiFileCache->fileSize($sUUID, $sTempName, '', 'Mail')
+			);
 		}
 		else
 		{
