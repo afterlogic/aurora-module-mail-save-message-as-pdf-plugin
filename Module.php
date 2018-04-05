@@ -30,10 +30,6 @@ class Module extends \Aurora\System\Module\AbstractModule
 		$sUUID = \Aurora\System\Api::getUserUUIDById($UserId);
 		$sTempName = md5($sUUID.$sFileName.microtime(true));
 
-		$oCssToInlineStyles = new \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles($Html);
-		$oCssToInlineStyles->setEncoding('utf-8');
-		$oCssToInlineStyles->setUseInlineStylesBlock(true);
-
 		$sExec = \Aurora\System\Api::DataPath().'/system/wkhtmltopdf/linux/wkhtmltopdf';
 		if (!\file_exists($sExec))
 		{
@@ -49,10 +45,11 @@ class Module extends \Aurora\System\Module\AbstractModule
 			$oSnappy = new \Knp\Snappy\Pdf($sExec);
 			$oSnappy->setOption('quiet', true);
 			$oSnappy->setOption('disable-javascript', true);
+			$oSnappy->setOption('encoding', 'utf-8');
 
 			$oApiFileCache = new \Aurora\System\Managers\Filecache();
 			
-			$oSnappy->generateFromHtml($oCssToInlineStyles->convert(),
+			$oSnappy->generateFromHtml($Html,
 				$oApiFileCache->generateFullFilePath($sUUID, $sTempName, '', $this->GetName()), array(), true);
 			
 			return \Aurora\System\Utils::GetClientFileResponse(
