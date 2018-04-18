@@ -8,8 +8,8 @@ module.exports = function (oAppData) {
 		UrlUtils = require('%PathToCoreWebclientModule%/js/utils/Url.js'),
 		
 		Ajax = require('%PathToCoreWebclientModule%/js/Ajax.js'),
-		App = require('%PathToCoreWebclientModule%/js/App.js'),
-		Screens = require('%PathToCoreWebclientModule%/js/Screens.js')
+		Api = require('%PathToCoreWebclientModule%/js/Api.js'),
+		App = require('%PathToCoreWebclientModule%/js/App.js')
 	;
 	
 	if (App.getUserRole() === Enums.UserRole.NormalUser)
@@ -57,13 +57,9 @@ module.exports = function (oAppData) {
 									{
 										UrlUtils.downloadByUrl(oResponse.Result.Actions.download.url);
 									}
-									else if (oResponse.ErrorCode === Enums.Errors.LibraryNoFound)
-									{
-										Screens.showError(TextUtils.i18n('%MODULENAME%/ERROR_NO_PDF_GENERATOR_FOUND'));
-									}
 									else
 									{
-										Screens.showError(TextUtils.i18n('%MODULENAME%/ERROR_CREATING_PDF'));
+										Api.showErrorByCode(oResponse, TextUtils.i18n('%MODULENAME%/ERROR_CREATING_PDF'));
 									}
 								}, this);
 							}

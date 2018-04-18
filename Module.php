@@ -17,6 +17,17 @@ namespace Aurora\Modules\MailSaveMessageAsPdfPlugin;
 class Module extends \Aurora\System\Module\AbstractModule
 {
 	/**
+	 * Initializes Mail Module.
+	 * 
+	 * @ignore
+	 */
+	public function init() 
+	{
+		$this->aErrors = [
+			Enums\ErrorCodes::LibraryNoFound => $this->i18N('ERROR_NO_PDF_GENERATOR_FOUND'),
+		];
+	}
+	/**
 	 * @param int $UserId
 	 * @param string $FileName
 	 * @param string $Html
@@ -59,7 +70,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 		}
 		else
 		{
-			throw new \Aurora\System\Exceptions\ApiException(\Aurora\System\Notifications::LibraryNoFound);
+			throw new \Aurora\System\Exceptions\ApiException(Enums\ErrorCodes::LibraryNoFound);
 		}
 
 		return false;
