@@ -17,4 +17,4 @@ NB: You need to make sure the file permissions are set correctly so that the lib
 Once it is done, you should be able to download message files and have them converted to PDF files on-the-fly.
 
 # License
-This module is licensed under AGPLv3 license if free version of the product is used or AfterLogic Software License if commercial version of the product was purchased.
+This module is licensed under AGPLv3 license if free version of the product is used or Afterlogic Software License if commercial version of the product was purchased.
