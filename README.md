@@ -16,5 +16,10 @@ NB: You need to make sure the file permissions are set correctly so that the lib
 
 Once it is done, you should be able to download message files and have them converted to PDF files on-the-fly.
 
+# Development
+This repository has a pre-commit hook. To make it work you need to configure git to use the particular hooks folder.
+
+`git config --local core.hooksPath .githooks/`
+
 # License
 This module is licensed under AGPLv3 license if free version of the product is used or Afterlogic Software License if commercial version of the product was purchased.
