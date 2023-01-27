@@ -12,12 +12,12 @@ namespace Aurora\Modules\MailSaveMessageAsPdfPlugin\Enums;
 
 class ErrorCodes
 {
-	const LibraryNoFound = 1;
+    public const LibraryNoFound = 1;
 
-	/**
-	 * @var array
-	 */
-	protected $aConsts = [
-		'LibraryNoFound' => self::LibraryNoFound,
-	];
+    /**
+     * @var array
+     */
+    protected $aConsts = [
+        'LibraryNoFound' => self::LibraryNoFound,
+    ];
 }

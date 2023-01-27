@@ -16,63 +16,66 @@ namespace Aurora\Modules\MailSaveMessageAsPdfPlugin;
  */
 class Module extends \Aurora\System\Module\AbstractModule
 {
-	/**
-	 * Initializes Mail Module.
-	 * 
-	 * @ignore
-	 */
-	public function init() 
-	{
-		$this->aErrors = [
-			Enums\ErrorCodes::LibraryNoFound => $this->i18N('ERROR_NO_PDF_GENERATOR_FOUND'),
-		];
-	}
-	/**
-	 * @param int $UserId
-	 * @param string $FileName
-	 * @param string $Html
-	 * @return boolean
-	 */
-	public function GeneratePdfFile($UserId, $FileName, $Html)
-	{
-		\Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::NormalUser);
-		
-		$sFileName = $FileName . '.pdf';
+    /**
+     * Initializes Mail Module.
+     *
+     * @ignore
+     */
+    public function init()
+    {
+        $this->aErrors = [
+            Enums\ErrorCodes::LibraryNoFound => $this->i18N('ERROR_NO_PDF_GENERATOR_FOUND'),
+        ];
+    }
+    /**
+     * @param int $UserId
+     * @param string $FileName
+     * @param string $Html
+     * @return boolean
+     */
+    public function GeneratePdfFile($UserId, $FileName, $Html)
+    {
+        \Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::NormalUser);
 
-		$sUUID = \Aurora\System\Api::getUserUUIDById($UserId);
-		$sTempName = md5($sUUID.$sFileName.microtime(true));
+        $sFileName = $FileName . '.pdf';
 
-		$sExec = \Aurora\System\Api::DataPath().'/system/wkhtmltopdf/linux/wkhtmltopdf';
-		if (!\file_exists($sExec))
-		{
-			$sExec = \Aurora\System\Api::DataPath().'/system/wkhtmltopdf/win/wkhtmltopdf.exe';
-			if (!\file_exists($sExec))
-			{
-				$sExec = '';
-			}
-		}
-		
-		if (0 < \strlen($sExec))
-		{
-			$oSnappy = new \Knp\Snappy\Pdf($sExec);
-			$oSnappy->setOption('quiet', true);
-			$oSnappy->setOption('disable-javascript', true);
-			$oSnappy->setOption('encoding', 'utf-8');
+        $sUUID = \Aurora\System\Api::getUserUUIDById($UserId);
+        $sTempName = md5($sUUID.$sFileName.microtime(true));
 
-			$oApiFileCache = new \Aurora\System\Managers\Filecache();
-			
-			$oSnappy->generateFromHtml($Html,
-				$oApiFileCache->generateFullFilePath($sUUID, $sTempName, '', self::GetName()), array(), true);
-			
-			return \Aurora\System\Utils::GetClientFileResponse(
-				self::GetName(), $UserId, $sFileName, $sTempName, $oApiFileCache->fileSize($sUUID, $sTempName, '', self::GetName())
-			);
-		}
-		else
-		{
-			throw new \Aurora\System\Exceptions\ApiException(Enums\ErrorCodes::LibraryNoFound);
-		}
+        $sExec = \Aurora\System\Api::DataPath().'/system/wkhtmltopdf/linux/wkhtmltopdf';
+        if (!\file_exists($sExec)) {
+            $sExec = \Aurora\System\Api::DataPath().'/system/wkhtmltopdf/win/wkhtmltopdf.exe';
+            if (!\file_exists($sExec)) {
+                $sExec = '';
+            }
+        }
 
-		return false;
-	}
+        if (0 < \strlen($sExec)) {
+            $oSnappy = new \Knp\Snappy\Pdf($sExec);
+            $oSnappy->setOption('quiet', true);
+            $oSnappy->setOption('disable-javascript', true);
+            $oSnappy->setOption('encoding', 'utf-8');
+
+            $oApiFileCache = new \Aurora\System\Managers\Filecache();
+
+            $oSnappy->generateFromHtml(
+                $Html,
+                $oApiFileCache->generateFullFilePath($sUUID, $sTempName, '', self::GetName()),
+                array(),
+                true
+            );
+
+            return \Aurora\System\Utils::GetClientFileResponse(
+                self::GetName(),
+                $UserId,
+                $sFileName,
+                $sTempName,
+                $oApiFileCache->fileSize($sUUID, $sTempName, '', self::GetName())
+            );
+        } else {
+            throw new \Aurora\System\Exceptions\ApiException(Enums\ErrorCodes::LibraryNoFound);
+        }
+
+        return false;
+    }
 }
