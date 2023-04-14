@@ -27,6 +27,16 @@ class Module extends \Aurora\System\Module\AbstractModule
             Enums\ErrorCodes::LibraryNoFound => $this->i18N('ERROR_NO_PDF_GENERATOR_FOUND'),
         ];
     }
+
+    /**
+     *
+     * @return Module
+     */
+    public static function Decorator()
+    {
+        return parent::Decorator();
+    }
+
     /**
      * @param int $UserId
      * @param string $FileName
