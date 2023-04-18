@@ -38,6 +38,15 @@ class Module extends \Aurora\System\Module\AbstractModule
     }
 
     /**
+     *
+     * @return Settings
+     */
+    protected function GetModuleSettings()
+    {
+        return $this->oModuleSettings;
+    }
+
+    /**
      * @param int $UserId
      * @param string $FileName
      * @param string $Html
