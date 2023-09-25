@@ -67,11 +67,11 @@ class Module extends \Aurora\System\Module\AbstractModule
         $sFileName = $FileName . '.pdf';
 
         $sUUID = \Aurora\System\Api::getUserUUIDById($UserId);
-        $sTempName = md5($sUUID.$sFileName.microtime(true));
+        $sTempName = md5($sUUID . $sFileName . microtime(true));
 
-        $sExec = \Aurora\System\Api::DataPath().'/system/wkhtmltopdf/linux/wkhtmltopdf';
+        $sExec = \Aurora\System\Api::DataPath() . '/system/wkhtmltopdf/linux/wkhtmltopdf';
         if (!\file_exists($sExec)) {
-            $sExec = \Aurora\System\Api::DataPath().'/system/wkhtmltopdf/win/wkhtmltopdf.exe';
+            $sExec = \Aurora\System\Api::DataPath() . '/system/wkhtmltopdf/win/wkhtmltopdf.exe';
             if (!\file_exists($sExec)) {
                 $sExec = '';
             }
